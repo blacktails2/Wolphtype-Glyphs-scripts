@@ -31,8 +31,9 @@ class MakeSmallCharacters( object ):
 		textSizeY = 20
 		inputSizeX = 60
 		inputSizeY = 20
+		checkSizeX = 140
 		windowWidth = spaceX*2+inputSizeX+100
-		windowHeight = spaceY*5+buttonSizeY*4
+		windowHeight = spaceY*6+buttonSizeY*5
 		self.w = vanilla.FloatingWindow(
 			( windowWidth, windowHeight ), # default window size
 			"Make Small Characters", # window title
@@ -48,9 +49,12 @@ class MakeSmallCharacters( object ):
 		self.w.inputSize = ArrowEditText( (spaceX+textSizeX, spaceY*2, inputSizeX, inputSizeY), "10", sizeStyle='regular', callback=self.textChange)
 		self.w.inputTranslateY = ArrowEditText( (spaceX+textSizeX, spaceY*3+inputSizeY, inputSizeX, inputSizeY), "10", sizeStyle='regular', callback=self.textChange)
 		
+		# Checkbox
+		self.w.masterSelector = vanilla.CheckBox( (spaceX, spaceY*4+inputSizeY*2, checkSizeX, textSizeY), "Only Current Master", sizeStyle='regular', value=False )
+		
 		# Run Button:
-		self.w.cancelButton = vanilla.Button((spaceX, spaceY*5+inputSizeY*2, buttonSizeX, buttonSizeY), "Cancel", sizeStyle='regular', callback=self.cancelButton )
-		self.w.runButton = vanilla.Button((spaceX*1.5+buttonSizeX, spaceY*5+inputSizeY*2, buttonSizeX, buttonSizeY), "OK", sizeStyle='regular', callback=self.MakeSmallMain )
+		self.w.cancelButton = vanilla.Button((spaceX, spaceY*6+inputSizeY*3, buttonSizeX, buttonSizeY), "Cancel", sizeStyle='regular', callback=self.cancelButton )
+		self.w.runButton = vanilla.Button((spaceX*1.5+buttonSizeX, spaceY*6+inputSizeY*3, buttonSizeX, buttonSizeY), "OK", sizeStyle='regular', callback=self.MakeSmallMain )
 
 		# Assign keyboard shortcuts
 		self.w.runButton.bind('enter', []) # enterなら動いたけど、のちのsetDefaultButtonだけでも機能したよ
@@ -131,13 +135,19 @@ class MakeSmallCharacters( object ):
 					pg = f.glyphs[parentGlyphName]
 					for m in f.masters:
 						gl = g.layers[m.id]
-						gl.shapes = []
+						if self.w.masterSelector.get() == 0:
+							ag = gl
+						else:
+							ag = l
+						# チェックボックスによってすべてのマスターに実行するか現在のマスターのみに実行するかを変更
+						# 対象のagにglを入れるかlを入れるかで判別
+						ag.shapes = []
 						newComp = GSComponent( pg )
-						gl.shapes.append(newComp)
-						gl.shapes[0].alignment = False
-						bodyCenterX = gl.width / 2
+						ag.shapes.append(newComp)
+						ag.shapes[0].alignment = False
+						bodyCenterX = ag.width / 2
 						bodyCenterY = (m.ascender + m.descender) / 2
-						c = gl.shapes[0]
+						c = ag.shapes[0]
 						trans = NSAffineTransform()
 						trans.scale(inputSize/100, (bodyCenterX,bodyCenterY))
 						trans.translateXBy_yBy_(0, -(inputTranslateY/inputSize*100))
