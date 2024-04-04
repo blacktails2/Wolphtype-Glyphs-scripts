@@ -124,7 +124,7 @@ class MakeSmallCharacters( object ):
 				g = l.parent				
 				m = l.master
 				if "small" in g.name:
-					parentGlyphName = g.name.replace("small",
+					parentGlyphName = g.name.replace("small", "")
 					# parentGlyph = GSGlyph( parentGlyphName )
 					# parentGlyphは使われてないし、GSGlyph()は新規グリフを生成する命令なので出番はなし。
 					# GSGlyph()はフォントファイルに即座にグリフを追加するわけではないので、一見すると何も起きてないように見えるかも。 "")
