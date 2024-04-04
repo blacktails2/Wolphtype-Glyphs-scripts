@@ -78,6 +78,7 @@ class MakeSmallCharacters( object ):
 			# ちなみにファイルの在処は　/~/Library/Preferences/com.GeorgSeifert.Glyphs3.plist
 			Glyphs.defaults["com.Wolphtype.Make Small Characters.inputSize"] = int(self.w.inputSize.get())
 			Glyphs.defaults["com.Wolphtype.Make Small Characters.inputTranslateY"] = int(self.w.inputTranslateY.get())
+			Glyphs.defaults["com.Wolphtype.Make Small Characters.masterSelector"] = bool(self.w.masterSelector.get())
 		except:
 			return False
 			
@@ -90,6 +91,7 @@ class MakeSmallCharacters( object ):
 			# Preferences Listファイル内の当該パラメータを引っ張ってきて、UIのテキストフィールドを差し替える
 			self.w.inputSize.set(Glyphs.defaults["com.Wolphtype.Make Small Characters.inputSize"] )
 			self.w.inputTranslateY.set(Glyphs.defaults["com.Wolphtype.Make Small Characters.inputTranslateY"])
+			self.w.masterSelector.set(Glyphs.defaults["com.Wolphtype.Make Small Characters.masterSelector"])
 		except: # ロード失敗ルート
 			# （初回起動時や、スクリプトおよびパラメータ名を変更した等の理由で、Preferencesファイル内のデータが読み込まれない場合）
 			return False
@@ -139,8 +141,6 @@ class MakeSmallCharacters( object ):
 							ag = gl
 						else:
 							ag = l
-						# チェックボックスによってすべてのマスターに実行するか現在のマスターのみに実行するかを変更
-						# 対象のagにglを入れるかlを入れるかで判別
 						ag.shapes = []
 						newComp = GSComponent( pg )
 						ag.shapes.append(newComp)
