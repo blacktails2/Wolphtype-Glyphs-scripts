@@ -1,4 +1,4 @@
-# MenuTitle: make small characters
+# MenuTitle: Make Small Characters…
 
 from __future__ import print_function, division, unicode_literals
 __doc__="""
@@ -129,7 +129,27 @@ class MakeSmallCharacters( object ):
 			for l in sel:
 				g = l.parent				
 				m = l.master
-				if "small" in g.name:
+				if "small" in g.name and "vert" in g.name:
+					parentGlyphName = g.name.replace("small", "").replace(".vert", "")
+					pg = f.glyphs[parentGlyphName]
+					for m in f.masters:
+						gl = g.layers[m.id]
+						if self.w.masterSelector.get() == 0:
+							ag = gl
+						else:
+							ag = l
+						ag.shapes = []
+						newComp = GSComponent( pg )
+						ag.shapes.append(newComp)
+						ag.shapes[0].alignment = False
+						bodyCenterX = ag.width / 2
+						bodyCenterY = (m.ascender + m.descender) / 2
+						c = ag.shapes[0]
+						trans = NSAffineTransform()
+						trans.scale(inputSize/100, (bodyCenterX,bodyCenterY))
+						trans.translateXBy_yBy_((inputTranslateY/inputSize*100), 0)
+						c.transform_(trans)
+				elif "small" in g.name:
 					parentGlyphName = g.name.replace("small", "")
 					# parentGlyph = GSGlyph( parentGlyphName )
 					# parentGlyphは使われてないし、GSGlyph()は新規グリフを生成する命令なので出番はなし。
