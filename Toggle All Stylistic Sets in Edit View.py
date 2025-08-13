@@ -53,7 +53,7 @@ def run():
         # turn OFF: remove all ssXX while preserving the order of remaining features
         new_features = [t for t in current if t not in ss_tags]
         tab.features = new_features
-        Glyphs.showNotification("Stylistic Sets", "Turned OFF: %s" % ", ".join(ss_tags))
+        pass
     else:
         # turn ON: add any missing ssXX at the end (do not duplicate)
         new_features = current[:]
@@ -61,7 +61,7 @@ def run():
             if tag not in current_set:
                 new_features.append(tag)
         tab.features = new_features
-        Glyphs.showNotification("Stylistic Sets", "Turned ON: %s" % ", ".join(ss_tags))
+        pass
 
 
 # Run
