@@ -24,7 +24,7 @@ class MonospacedFiguresMaker(object):
     def __init__(self):
         font = Glyphs.font
         if not font:
-            Message("No Font", u"Please open a font first.")
+            print("No Font", u"Please open a font first.")
             return
 
         self.font = font
@@ -156,7 +156,7 @@ class MonospacedFiguresMaker(object):
                 w = int(float(field.get()))
                 targetWidths.append(w)
             except Exception:
-                Message("Width must be integer", u"Please enter valid integers for the enabled masters.")
+                print("Width must be integer", u"Please enter valid integers for the enabled masters.")
                 return
 
         self.SavePreferences()
@@ -171,7 +171,7 @@ class MonospacedFiguresMaker(object):
                 sourceName = base + suffix
                 sourceGlyph = font.glyphs[sourceName]
                 if not sourceGlyph:
-                    Message("Missing source glyph", u"Could not find “%s” for %s." % (sourceName, g.name))
+                    print("Missing source glyph", u"Could not find “%s” for %s." % (sourceName, g.name))
                     continue
 
                 for idx, master in enumerate(self.masters):

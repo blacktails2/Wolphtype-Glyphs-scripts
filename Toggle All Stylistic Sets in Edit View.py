@@ -32,17 +32,17 @@ def stylisticSetTags(font):
 def run():
     font = Glyphs.font
     if not font:
-        Message("No Font", "Please open a font first.")
+        print("No Font", "Please open a font first.")
         return
 
     tab = font.currentTab
     if not tab:
-        Message("No Edit Tab", "Open an Edit tab (Cmd-T) and try again.")
+        print("No Edit Tab", "Open an Edit tab (Cmd-T) and try again.")
         return
 
     ss_tags = stylisticSetTags(font)
     if not ss_tags:
-        Message("No ssXX Features", "This font has no stylistic set features (ss01–ss20).")
+        print("No ssXX Features", "This font has no stylistic set features (ss01–ss20).")
         return
 
     current = list(tab.features or [])  # list of enabled OT feature tags
